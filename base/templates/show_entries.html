@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if session.logged_in %}
+<form action="{{ url_for('api_v1.add_entry') }}" class=add-entry method=post>
+    <dl>
+        <dt>Title:
+        <dd><input name=title size=30 type=text>
+        <dt>Text:
+        <dd><textarea cols=40 name=text rows=5></textarea>
+        <dd><input type=submit value=Share>
+    </dl>
+</form>
+<form action="{{ url_for('api_v1.del_entry') }}" class=del-entry method=post>
+    <dl>
+        <dt>ID:
+        <dd><input name=ID size=30 type=number>
+        <dd><input type=submit value=Del>
+    </dl>
+</form>
+{% endif %}
+<ul class=entries>
+    {% for entry in entries %}
+    <li><h2>{{ entry.text }} {{ entry.id }}</h2>{{ entry.title|safe }}
+        {% else %}
+    <li><em>Unbelievable. No entries here so far or not login</em>
+        {% endfor %}
+</ul>
+{% endblock %}
